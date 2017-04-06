@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/alu.dir/alu.c.o CMakeFiles/alu.dir/main.c.o  -o alu -rdynamic 

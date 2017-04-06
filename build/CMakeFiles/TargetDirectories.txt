@@ -1,0 +1,3 @@
+/home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/build/CMakeFiles/edit_cache.dir
+/home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/build/CMakeFiles/rebuild_cache.dir
+/home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/build/CMakeFiles/alu.dir
