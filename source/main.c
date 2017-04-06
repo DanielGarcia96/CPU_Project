@@ -11,19 +11,21 @@ int main(int argc, char *argv[])
 
 void fibonacci(int n, char verbose)
 {
+    printf("Printing first %u Fibonacci numbers\n", n);
+
     int a = 1;
     int b = 1;
-    n = sub(n, 2, verbose);
 
     // Print first two numbers
-    printf("%u\n%u\n", a, b);
+    printf("fibonacci %3u: %10u\n", 1, a);
+    printf("fibonacci %3u: %10u\n", 2, b);
 
     int i;
-    for(i = 0; i < n; i = add(i, 1, verbose))
+    for(i = 3; i <= n; i = add(i, 1, verbose))
     {
         int c = a;
         a = add(a, b, verbose);
         b = c;
-        printf("%u\n", a);
+        printf("fibonacci %3u: %10u\n", i, a);
     }
 }
