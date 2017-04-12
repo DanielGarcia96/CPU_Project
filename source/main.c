@@ -9,23 +9,23 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+// Function to test the accuracy of my addsub function
 void fibonacci(int n, char verbose)
 {
     printf("Printing first %u Fibonacci numbers\n", n);
 
-    int a = 1;
-    int b = 1;
+    addSub i = { 'A', 'U', 3, 1 };
+    addSub packet = { 'A', 'U', 2, 1 };
 
     // Print first two numbers
-    printf("fibonacci %3u: %10u\n", 1, a);
-    printf("fibonacci %3u: %10u\n", 2, b);
+    printf("fibonacci %3u: %10u\n", 1, packet.b);
+    printf("fibonacci %3u: %10u\n", 2, packet.a);
 
-    int i;
-    for(i = 3; i <= n; i = add(i, 1, verbose))
+    for(; i.a <= n; i.a = addsub(i, verbose))
     {
-        int c = a;
-        a = add(a, b, verbose);
-        b = c;
-        printf("fibonacci %3u: %10u\n", i, a);
+        int c = packet.a;
+        packet.a = addsub(packet, verbose);
+        packet.b = c;
+        printf("fibonacci %3u: %10u\n", i.a, packet.a);
     }
 }

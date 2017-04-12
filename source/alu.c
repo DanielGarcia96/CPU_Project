@@ -1,27 +1,48 @@
 #include <limits.h>
 #include "alu.h"
 
-int add(int a, int b, char verbose)
+// U100 prototype
+int addsub(addSub packet, char verbose)
 {
-    int i, int_size = sizeof(int) * CHAR_BIT;
-    for(i = 0; i < int_size; i++)
+    // Need to do twos_complement in the case of subtraction
+    if(packet.op == 'S')
     {
-        int c = a & b;
-        c <<= 1;
-        a ^= b;
-        b = c;
+        packet.b = ~packet.b;
+        addSub result = { 'A', packet.t, packet.b, 1 };
+        packet.b = addsub(result, verbose);
     }
 
-    return a;
+    // Set up a loop control variable, see how big an integer is in this architecture
+    int i, int_size = sizeof(int) * CHAR_BIT;
+
+    // Loop through every bit in the number
+    for(i = 0; i < int_size; i++)
+    {
+        // Copy any carry outs
+        int c = packet.a & packet.b;
+
+        // Shift it forward one so it adds to the right bit
+        c <<= 1;
+
+        // Xor to get the first binary addition
+        packet.a ^= packet.b;
+
+        // Copy the carry out into b
+        packet.b = c;
+    }
+    
+    // Return the result
+    return packet.a;
 }
 
-int sub(int a, int b, char verbose)
+// U112 prototype
+void MUX1(int op[], int sel)
 {
-    return add(a, twos_complement(b, verbose), verbose);
+    
 }
 
-int twos_complement(int a, char verbose)
+// U113 prototype
+void MUX2(int op[], int sel)
 {
-    a = ~a;
-    return add(a, 1, verbose);
+    
 }
