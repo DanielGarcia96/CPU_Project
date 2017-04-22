@@ -16,6 +16,9 @@ void fibonacci(short n, char verbose)
     short a = 1;
     short b = 1;
 
+    printf("fibonacci %3u: %10u\n", 1, a);
+    printf("fibonacci %3u: %10u\n", 2, b);
+
     short i;
     for(i = 3; i <= n; i = addsub(i, 1, verbose))
     {
