@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include "alu.h"
 
+short sp = 0;
+short r0 = 0;
+short r1 = 0;
+short r2 = 0;
+short r3 = 0;
+
 void fibonacci(short n, char verbose);
 
 int main(int argc, char *argv[])
