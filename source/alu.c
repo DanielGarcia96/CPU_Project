@@ -1,14 +1,15 @@
 #include <limits.h>
+#include <stdio.h>
 #include "alu.h"
 
 // U14
 void stack_pointer_impl(short updated_value)
 {
-    return 0;
+    return;
 }
 
 // U100
-short addsub(short *a, short *b, char verbose)
+short addsub(short a, short b, char verbose)
 {
     short i, short_size = sizeof(short) * CHAR_BIT;
     short add_result, sub_result;
@@ -37,25 +38,25 @@ short addsub(short *a, short *b, char verbose)
 }
 
 // U101
-short and_impl(short *a, short *b, char verbose)
+short and_impl(short a, short b, char verbose)
 {
     return a & b;
 }
 
 // U102
-short or_impl(short *a, short *b, char verbose)
+short or_impl(short a, short b, char verbose)
 {
     return a | b;
 }
 
 // U103
-short xor_impl(short *a, short *b, char verbose)
+short xor_impl(short a, short b, char verbose)
 {
     return a ^ b;
 }
 
 // U104
-short not_impl(short *b, char verbose)
+short not_impl(short b, char verbose)
 {
     return ~b;
 }
@@ -92,11 +93,10 @@ void mux_112(char select_a, char select_b, char verbose)
     }
 
     addsub(*register_pointera, *register_pointerb, verbose);
-    addsub(*register_pointera, *register_pointerb, verbose);
     and_impl(*register_pointera, *register_pointerb, verbose);
     or_impl(*register_pointera, *register_pointerb, verbose);
     xor_impl(*register_pointera, *register_pointerb, verbose);
-    not_impl(*register_pointera, *register_pointerb, verbose);
+    not_impl(*register_pointerb, verbose);
 }
 
 // U113

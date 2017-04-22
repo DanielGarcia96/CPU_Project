@@ -9,6 +9,8 @@
 /home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/source/alu.c
 limits.h
 -
+stdio.h
+-
 alu.h
 /home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/source/alu.h
 
