@@ -1,3 +1,5 @@
-int add(int a, int b, char verbose);
-int sub(int a, int b, char verbose);
-int twos_complement(int a, char verbose);
+short addsub(short a, short b, char verbose);
+short and_impl(short a, short b, char verbose);
+short or_impl(short a, short b, char verbose);
+short xor_impl(short a, short b, char verbose);
+short not_impl(short b, char verbose);

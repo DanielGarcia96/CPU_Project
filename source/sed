@@ -31,25 +31,25 @@ short addsub(short a, short b, char verbose)
 }
 
 // U101
-short and_impl(short a, short b, char verbose)
+short and(short a, short b, char verbose)
 {
     return a & b;
 }
 
 // U102
-short or_impl(short a, short b, char verbose)
+short or(short a, short b, char verbose)
 {
     return a | b;
 }
 
 // U103
-short xor_impl(short a, short b, char verbose)
+short xor(short a, short b, char verbose)
 {
     return a ^ b;
 }
 
 // U104
-short not_impl(short b, char verbose)
+short not(short b, char verbose)
 {
     return ~b;
 }
