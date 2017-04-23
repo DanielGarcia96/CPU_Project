@@ -3,20 +3,20 @@
 #include "alu.h"
 
 // U14
-void stack_pointer_impl(short updated_value)
+void stack_pointer_impl(reg_t updated_value)
 {
     return;
 }
 
 // U100
-short addsub(short a, short b, char verbose)
+reg_t addsub(reg_t a, reg_t b, char verbose)
 {
-    short i, short_size = sizeof(short) * CHAR_BIT;
-    short add_result, sub_result;
+    reg_t i, reg_t_size = sizeof(reg_t) * CHAR_BIT;
+    reg_t add_result, sub_result;
 
-    for(i = 0; i < short_size; i++)
+    for(i = 0; i < reg_t_size; i++)
     {
-        short c = a & b;
+        reg_t c = a & b;
         c <<= 1;
         a ^= b;
         b = c;
@@ -25,9 +25,9 @@ short addsub(short a, short b, char verbose)
     add_result = a;
     b = -b;
 
-    for(i = 0; i < short_size; i++)
+    for(i = 0; i < reg_t_size; i++)
     {
-        short c = a & b;
+        reg_t c = a & b;
         c <<= 1;
         a ^= b;
         b = c;
@@ -38,31 +38,31 @@ short addsub(short a, short b, char verbose)
 }
 
 // U101
-short and_impl(short a, short b, char verbose)
+reg_t and_impl(reg_t a, reg_t b, char verbose)
 {
     return a & b;
 }
 
 // U102
-short or_impl(short a, short b, char verbose)
+reg_t or_impl(reg_t a, reg_t b, char verbose)
 {
     return a | b;
 }
 
 // U103
-short xor_impl(short a, short b, char verbose)
+reg_t xor_impl(reg_t a, reg_t b, char verbose)
 {
     return a ^ b;
 }
 
 // U104
-short not_impl(short b, char verbose)
+reg_t not_impl(reg_t b, char verbose)
 {
     return ~b;
 }
 
 // U107
-short stack_addsub(short *sp, char plusminus, char align)
+reg_t stack_addsub(reg_t *sp, char plusminus, char align)
 {
     align = 2;
     return 0;
@@ -71,8 +71,8 @@ short stack_addsub(short *sp, char plusminus, char align)
 // U112
 void mux_112(char select_a, char select_b, char verbose)
 {
-    short *register_pointera;
-    short *register_pointerb = mux_113(select_b);
+    reg_t *register_pointera;
+    reg_t *register_pointerb = mux_113(select_b);
 
     switch(select_a) 
     {
@@ -100,7 +100,7 @@ void mux_112(char select_a, char select_b, char verbose)
 }
 
 // U113
-short * mux_113(char select)
+reg_t * mux_113(char select)
 {
     switch(select) 
     {
@@ -129,13 +129,13 @@ void mux_U117(char select)
 }
 
 // U118
-void mux_U118A(short select)
+void mux_U118A(reg_t select)
 {
     
 }
 
 // U118
-void mux_U118B(short select)
+void mux_U118B(reg_t select)
 {
     
 }

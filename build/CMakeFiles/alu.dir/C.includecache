@@ -15,6 +15,10 @@ alu.h
 /home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/source/alu.h
 
 /home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/source/alu.h
+inttypes.h
+-
+stdint.h
+-
 
 /home/daniel/Documents/cs/Computer_Architecture/final_project/CPU_Project/source/main.c
 stdio.h
