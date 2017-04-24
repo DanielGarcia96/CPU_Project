@@ -1,4 +1,8 @@
+#ifndef ALU_H
+#define ALU_H
+
 #include <stdint.h>
+#include "mux.h"
 
 #define BIT(x, i) (((x) & (1 << (i))) >> (i))
 
@@ -7,59 +11,51 @@
 #define FLAG_ZERO     (1<<2)
 #define FLAG_NEGATIVE (1<<3)
 
-extern uint16_t sp;
-extern uint8_t r0;
-extern uint8_t r1;
-extern uint8_t r2;
-extern uint8_t r3;
+// 16-bit Register Value Type
+typedef uint16_t reg16_t;
+// 8-bit Register Value Type
+typedef uint8_t reg8_t;
+// Single Bit Type
+typedef uint8_t bit_t;
+// (Multiple Bit) Control Line Type
+typedef uint8_t ctl_t;
 
-static uint8_t mux_4_to_1(uint8_t input[4], uint8_t select)
-{
-    if (select >= 4)
-    {
-        fprintf(stderr, "'select' control signal out of bounds.\n");
-        exit(1);
-    }
+// NOTE: "Register Value Types" can represent intermediate states, not just
+// values stored in actual registers.
 
-    return input[select];
-}
-
-static uint8_t mux_8_to_1(uint8_t input[8], uint8_t select)
-{
-    if (select >= 8)
-    {
-        fprintf(stderr, "'select' control signal out of bounds.\n");
-        exit(1);
-    }
-
-    return input[select];
-}
+extern reg16_t sp;
+extern reg8_t r0;
+extern reg8_t r1;
+extern reg8_t r2;
+extern reg8_t r3;
 
 // U14
-void stack_pointer_impl(uint16_t updated_value);
+void stack_pointer_impl(reg16_t updated_value);
 // U100
-uint8_t alu_add_sub(uint8_t reg_a, uint8_t reg_b, uint8_t carry_in, uint8_t *overflow, uint8_t *carry_out);
+reg8_t alu_add_sub(reg8_t reg_a, reg8_t reg_b, bit_t carry_in, bit_t *overflow, bit_t *carry_out);
 // U101
-uint8_t alu_and(uint8_t a, uint8_t b);
+reg8_t alu_and(reg8_t a, reg8_t b);
 // U102
-uint8_t alu_or(uint8_t a, uint8_t b);
+reg8_t alu_or(reg8_t a, reg8_t b);
 // U103
-uint8_t alu_xor(uint8_t a, uint8_t b);
+reg8_t alu_xor(reg8_t a, reg8_t b);
 // U104
-uint8_t alu_not(uint8_t b);
+reg8_t alu_not(reg8_t b);
 // U107
 // uint8_t stack_addsub(uint8_t *sp, char plusminus, char align);
 // U111
-uint8_t mux_111(uint8_t regs[8], uint8_t select);
+reg8_t mux_111(reg8_t regs[8], ctl_t select);
 // U112
-uint8_t mux_112(uint8_t regs[4], uint8_t select);
+reg8_t mux_112(reg8_t regs[4], ctl_t select);
 // U113
-uint8_t mux_113(uint8_t regs[4], uint8_t select);
+reg8_t mux_113(reg8_t regs[4], ctl_t select);
 // U117
-void mux_U117(uint8_t select);
+void mux_U117(ctl_t select);
 // U118
-void mux_U118A(uint8_t select);
+void mux_U118A(ctl_t select);
 // U118
-void mux_U118B(uint8_t select);
+void mux_U118B(ctl_t select);
 
-uint8_t alu(uint8_t select_a, uint8_t select_b, uint8_t select_out, uint8_t carry_in, uint8_t *flags);
+reg8_t alu(ctl_t select_a, ctl_t select_b, ctl_t select_out, bit_t carry_in, ctl_t *flags);
+
+#endif
