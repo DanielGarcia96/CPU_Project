@@ -1,36 +1,36 @@
 #include <stdio.h>
 #include "alu.h"
 
-reg_t sp = 0;
-reg_t r0 = 0;
-reg_t r1 = 0;
-reg_t r2 = 0;
-reg_t r3 = 0;
+reg16_t sp;
+reg8_t r0;
+reg8_t r1;
+reg8_t r2;
+reg8_t r3;
 
-void fibonacci(reg_t n, char verbose);
+void fibonacci(uint8_t n);
 
 int main(int argc, char *argv[])
 {
-    fibonacci(10, 'V');
+    fibonacci(10);
     return 0;
 }
 
-void fibonacci(reg_t n, char verbose)
+void fibonacci(reg8_t n)
 {
     printf("Printing first %u Fibonacci numbers\n", n);
 
-    reg_t a = 1;
-    reg_t b = 1;
+    reg8_t a = 1;
+    reg8_t b = 1;
 
     printf("fibonacci %3u: %10u\n", 1, a);
     printf("fibonacci %3u: %10u\n", 2, b);
 
-    reg_t i;
-    for(i = 3; i <= n; i = addsub(i, 1, verbose))
+    bit_t v = 0, c = 0;
+    for(reg8_t i = 3; i <= n && !v && !c; i = alu_add_sub(i, 1, 0, &v, &c))
     {
-        reg_t c = a;
-        a = addsub(a, b, verbose);
-        b = c;
+        reg8_t prev_a = a;
+        a = alu_add_sub(a, b, 0, &v, &c);
+        b = prev_a;
         printf("fibonacci %3u: %10u\n", i, a);
     }
 }

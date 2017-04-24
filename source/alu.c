@@ -1,141 +1,127 @@
 #include <limits.h>
 #include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
 #include "alu.h"
 
 // U14
-void stack_pointer_impl(reg_t updated_value)
+void stack_pointer_impl(reg16_t updated_value)
 {
-    return;
 }
 
 // U100
-reg_t addsub(reg_t a, reg_t b, char verbose)
+reg8_t alu_add_sub(reg8_t reg_a, reg8_t reg_b, bit_t carry_in, bit_t *overflow, bit_t *carry_out)
 {
-    reg_t i, reg_t_size = sizeof(reg_t) * CHAR_BIT;
-    reg_t add_result, sub_result;
-
-    for(i = 0; i < reg_t_size; i++)
+    reg8_t sum, s, a, b, c, c_prev;
+    c = carry_in;
+    sum = 0;
+    for (reg8_t i = 0; i < 8; i++)
     {
-        reg_t c = a & b;
-        c <<= 1;
-        a ^= b;
-        b = c;
+        a = BIT(reg_a, i);
+        b = BIT(reg_b, i);
+        s = (a ^ b) ^ c;
+        sum |= s << i;
+        c_prev = c;
+        c = ((a ^ b) & c) | (a & b);
     }
-
-    add_result = a;
-    b = -b;
-
-    for(i = 0; i < reg_t_size; i++)
-    {
-        reg_t c = a & b;
-        c <<= 1;
-        a ^= b;
-        b = c;
-    }
-
-    sub_result = a;
-    return add_result;
+    *carry_out = c;
+    *overflow = c ^ c_prev;
+    return sum;
 }
 
 // U101
-reg_t and_impl(reg_t a, reg_t b, char verbose)
+reg8_t alu_and(reg8_t a, reg8_t b)
 {
     return a & b;
 }
 
 // U102
-reg_t or_impl(reg_t a, reg_t b, char verbose)
+reg8_t alu_or(reg8_t a, reg8_t b)
 {
     return a | b;
 }
 
 // U103
-reg_t xor_impl(reg_t a, reg_t b, char verbose)
+reg8_t alu_xor(reg8_t a, reg8_t b)
 {
     return a ^ b;
 }
 
 // U104
-reg_t not_impl(reg_t b, char verbose)
+reg8_t alu_not(reg8_t a)
 {
-    return ~b;
+    return ~a;
 }
 
 // U107
-reg_t stack_addsub(reg_t *sp, char plusminus, char align)
+// uint16_t stack_addsub(uint16_t *sp, char plusminus, char align)
+// {
+//     align = 2;
+//     return 0;
+// }
+
+// U110
+ctl_t flags_110(bit_t sum, bit_t overflow, bit_t carry_out)
 {
-    align = 2;
-    return 0;
+    return (overflow   ? FLAG_OVERFLOW : 0)
+         | (carry_out  ? FLAG_CARRY    : 0)
+         | (sum == 0   ? FLAG_ZERO     : 0)
+         | (sum & 0x80 ? FLAG_NEGATIVE : 0);
+}
+
+// U111
+reg8_t mux_111(reg8_t regs[8], ctl_t select)
+{
+    assert(select < 5);
+    return mux_8_to_1(regs, select);
 }
 
 // U112
-void mux_112(char select_a, char select_b, char verbose)
+reg8_t mux_112(reg8_t regs[4], ctl_t select)
 {
-    reg_t *register_pointera;
-    reg_t *register_pointerb = mux_113(select_b);
-
-    switch(select_a) 
-    {
-        case 0:
-            register_pointera = &r0;
-        break;
-        case 1:
-            register_pointera = &r1;
-        break;
-        case 2:
-            register_pointera = &r2;
-        break;
-        case 3:
-            register_pointera = &r3;
-        break;
-        default:
-            fprintf(stderr, "Incorrect Select Input");
-    }
-
-    addsub(*register_pointera, *register_pointerb, verbose);
-    and_impl(*register_pointera, *register_pointerb, verbose);
-    or_impl(*register_pointera, *register_pointerb, verbose);
-    xor_impl(*register_pointera, *register_pointerb, verbose);
-    not_impl(*register_pointerb, verbose);
+    return mux_4_to_1(regs, select);
 }
 
 // U113
-reg_t * mux_113(char select)
+reg8_t mux_113(reg8_t regs[4], ctl_t select)
 {
-    switch(select) 
-    {
-        case 0:
-            return &r0;
-        break;
-        case 1:
-            return &r1;
-        break;
-        case 2:
-            return &r2;
-        break;
-        case 3:
-            return &r3;
-        break;
-        default:
-            fprintf(stderr, "Incorrect Select Input");
-            return NULL;
-    }
+    return mux_4_to_1(regs, select);
 }
 
 // U117
-void mux_U117(char select)
+void mux_U117(ctl_t select)
 {
     
 }
 
 // U118
-void mux_U118A(reg_t select)
+void mux_U118A(ctl_t select)
 {
     
 }
 
 // U118
-void mux_U118B(reg_t select)
+void mux_U118B(ctl_t select)
 {
     
+}
+
+reg8_t alu(ctl_t select_a, ctl_t select_b, ctl_t select_out, bit_t carry_in, ctl_t *flags)
+{
+    reg8_t regs[4] = {r0, r1, r2, r3};
+    reg8_t reg_a = mux_112(regs, select_a);
+    reg8_t reg_b = mux_113(regs, select_b);
+    
+    bit_t overflow, carry_out;
+    reg8_t alu_out[8] = { alu_add_sub(reg_a, reg_b, carry_in, &overflow, &carry_out)
+                        , alu_and(reg_a, reg_b)
+                        , alu_or(reg_a, reg_b)
+                        , alu_xor(reg_a, reg_b)
+                        , alu_not(reg_a)
+                        , 0
+                        , 0
+                        , 0 };
+    *flags = flags_110(alu_out[0], overflow, carry_out);
+    
+    return mux_111(alu_out, select_out);
 }
