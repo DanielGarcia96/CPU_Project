@@ -4,9 +4,90 @@
 #include <stdlib.h>
 #include "alu.h"
 
-// U14
-void stack_pointer_impl(reg16_t updated_value)
+// U10
+reg8_t reg0(reg8_t updated_value, char clk)
 {
+    static reg8_t waiting_val;
+    // On rising edge of clock, update value of register
+    if(clk)
+    {
+        r0 = waiting_val;
+    }
+    // Otherwise, change the value of what's waiting to enter register
+    else
+    {
+       waiting_val = updated_value;
+    }
+        
+    return r0;
+}
+
+
+// U11
+reg8_t reg1(reg8_t updated_value, char clk)
+{
+    static reg8_t waiting_val;
+    if(clk)
+    {
+        r1 = waiting_val;
+    }
+    else
+    {
+       waiting_val = updated_value;
+    }
+        
+    return r1;
+}
+
+
+// U12
+reg8_t reg2(reg8_t updated_value, char clk)
+{
+    static reg8_t waiting_val;
+    if(clk)
+    {
+        r2 = waiting_val;
+    }
+    else
+    {
+       waiting_val = updated_value;
+    }
+        
+    return r2;
+}
+
+
+// U13
+reg8_t reg3(reg8_t updated_value, char clk)
+{
+    static reg8_t waiting_val;
+    if(clk)
+    {
+        r3 = waiting_val;
+    }
+    else
+    {
+       waiting_val = updated_value;
+    }
+        
+    return r3;
+}
+
+
+// U14
+reg16_t stack_pointer_impl(reg16_t updated_value, char clk)
+{
+    static reg16_t waiting_val;
+    if(clk)
+    {
+        sp = waiting_val;
+    }
+    else
+    {
+       waiting_val = updated_value;
+    }
+        
+    return sp;
 }
 
 // U100
@@ -104,6 +185,12 @@ void mux_U118A(ctl_t select)
 void mux_U118B(ctl_t select)
 {
     
+}
+
+void print_regs()
+{
+    printf("r0: %u, r1: %u, r2: %u, r3: %u, sp: %u,\n",
+           r0, r1, r2, r3, sp);
 }
 
 reg8_t alu(ctl_t select_a, ctl_t select_b, ctl_t select_out, bit_t carry_in, ctl_t *flags)
