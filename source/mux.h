@@ -39,9 +39,9 @@ static reg8_t mux_8_to_1(reg8_t input[8], reg8_t select)
 // Simply call this function as so: demux_2_to_4({&reg0, &reg1, &reg2, &reg3},
 //                                               input_a, select_a, enable_a)
 //                                               input_b, select_b, enable_b);
-static void demux_2_to_4(reg8_t (*registers[4])(reg8_t, char),
-                            reg8_t input_a, reg8_t select_a, char enable_a, 
-                            reg8_t input_b, reg8_t select_b, char enable_b)
+static void demux_2_to_4(reg8_t (*registers[4])(reg8_t, ctl_t),
+                            reg8_t input_a, reg8_t select_a, ctl_t enable_a, 
+                            reg8_t input_b, reg8_t select_b, ctl_t enable_b)
 {
     if (select_a >= 4 | select_b >= 4)
     {
@@ -49,7 +49,7 @@ static void demux_2_to_4(reg8_t (*registers[4])(reg8_t, char),
         exit(1);
     }
 
-    reg8_t (*reg_function)(reg8_t, char);
+    reg8_t (*reg_function)(reg8_t, ctl_t);
 
     if(enable_a)
     {

@@ -22,15 +22,15 @@ extern reg8_t r3;
 extern reg8_t alu_output;
 
 // U10
-reg8_t reg0(reg8_t updated_value, char clk);
+reg8_t reg0(reg8_t updated_value, ctl_t clk);
 // U11
-reg8_t reg1(reg8_t updated_value, char clk);
+reg8_t reg1(reg8_t updated_value, ctl_t clk);
 // U12
-reg8_t reg2(reg8_t updated_value, char clk);
+reg8_t reg2(reg8_t updated_value, ctl_t clk);
 // U13
-reg8_t reg3(reg8_t updated_value, char clk);
+reg8_t reg3(reg8_t updated_value, ctl_t clk);
 // U14
-reg16_t stack_pointer_impl(reg16_t updated_value, char clk);
+reg16_t stack_pointer_impl(reg16_t updated_value, ctl_t clk);
 // U100
 reg8_t alu_add_sub(reg8_t reg_a, reg8_t reg_b, bit_t carry_in, bit_t *overflow, bit_t *carry_out);
 // U101

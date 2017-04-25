@@ -5,9 +5,9 @@
 #include "alu.h"
 
 // U10
-reg8_t reg0(reg8_t updated_value, char clk)
+reg8_t reg0(reg8_t updated_value, ctl_t clk)
 {
-    static reg8_t waiting_val;
+    static reg8_t waiting_val = 0;
     // On rising edge of clock, update value of register
     if(clk)
     {
@@ -24,9 +24,9 @@ reg8_t reg0(reg8_t updated_value, char clk)
 
 
 // U11
-reg8_t reg1(reg8_t updated_value, char clk)
+reg8_t reg1(reg8_t updated_value, ctl_t clk)
 {
-    static reg8_t waiting_val;
+    static reg8_t waiting_val = 0;
     if(clk)
     {
         r1 = waiting_val;
@@ -41,9 +41,9 @@ reg8_t reg1(reg8_t updated_value, char clk)
 
 
 // U12
-reg8_t reg2(reg8_t updated_value, char clk)
+reg8_t reg2(reg8_t updated_value, ctl_t clk)
 {
-    static reg8_t waiting_val;
+    static reg8_t waiting_val = 0;
     if(clk)
     {
         r2 = waiting_val;
@@ -58,9 +58,9 @@ reg8_t reg2(reg8_t updated_value, char clk)
 
 
 // U13
-reg8_t reg3(reg8_t updated_value, char clk)
+reg8_t reg3(reg8_t updated_value, ctl_t clk)
 {
-    static reg8_t waiting_val;
+    static reg8_t waiting_val = 0;
     if(clk)
     {
         r3 = waiting_val;
@@ -75,9 +75,9 @@ reg8_t reg3(reg8_t updated_value, char clk)
 
 
 // U14
-reg16_t stack_pointer_impl(reg16_t updated_value, char clk)
+reg16_t stack_pointer_impl(reg16_t updated_value, ctl_t clk)
 {
-    static reg16_t waiting_val;
+    static reg16_t waiting_val = 0;
     if(clk)
     {
         sp = waiting_val;
