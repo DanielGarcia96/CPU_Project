@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include "alu.h"
+#include "mem.h"
 
-reg16_t sp = 0xE00;
 reg8_t r0 = 0;
 reg8_t r1 = 0;
 reg8_t r2 = 0;
 reg8_t r3 = 0;
+reg16_t sp = 0xE00;
 reg8_t alu_output = 0;
+
+char Data[4096];
+char memoryArray[16][4096] = {};
 
 void fibonacci(uint8_t n);
 
@@ -17,6 +21,14 @@ int main(int argc, char *argv[])
         fprintf(stderr, "USAGE: cpu [HEX-PROGRAM]\n");
         return 1;
     }
+
+    // RW variables
+    char address[10];
+    char inputAddr[10];
+    char inputData []= "abcdefghi444444444444444444444";
+    int i = 0;
+
+    char* returnData;
     
     char *code = argv[1];
     int byte;
