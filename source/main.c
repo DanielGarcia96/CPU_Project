@@ -1,17 +1,28 @@
 #include <stdio.h>
 #include "alu.h"
 
-reg16_t sp;
-reg8_t r0;
-reg8_t r1;
-reg8_t r2;
-reg8_t r3;
+reg16_t sp = 0xE00;
+reg8_t r0 = 0;
+reg8_t r1 = 0;
+reg8_t r2 = 0;
+reg8_t r3 = 0;
+reg8_t alu_output = 0;
 
 void fibonacci(uint8_t n);
 
 int main(int argc, char *argv[])
 {
-    fibonacci(10);
+    // fetch, decode, execute loop goes here
+    /*
+        while ( there are instructions left)
+        {
+            decode instructions
+            execute instructions
+            decide which output needs to be retrieved:
+                e.g. printf("%u\n", alu_output);
+            update the clock
+        }
+    */
     return 0;
 }
 
