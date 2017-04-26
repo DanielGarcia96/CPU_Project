@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     char *code = argv[1];
     int byte;
     int offset = 0;
-    while ((offset = sscanf(code, "%02X", &byte)) == EOF)
+    while ((offset = sscanf(code, "%02X", &byte)) != EOF)
     {
         code += offset;
         // Process current byte
