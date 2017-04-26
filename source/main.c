@@ -12,6 +12,20 @@ void fibonacci(uint8_t n);
 
 int main(int argc, char *argv[])
 {
+    if (argc != 2)
+    {
+        fprintf(stderr, "USAGE: cpu [HEX-PROGRAM]\n");
+        return 1;
+    }
+    
+    char *code = argv[1];
+    int byte;
+    int offset = 0;
+    while ((offset = sscanf(code + offset, "%02X", &byte)) == EOF)
+    {
+        // Process current byte
+    }
+    
     // fetch, decode, execute loop goes here
     /*
         while ( there are instructions left)
