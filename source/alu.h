@@ -42,7 +42,7 @@ reg8_t alu_xor(reg8_t a, reg8_t b);
 // U104
 reg8_t alu_not(reg8_t b);
 // U107
-// uint8_t stack_addsub(uint8_t *sp, char plusminus, char align);
+reg16_t stack_add_sub(ctl_t plusminus);
 // U111
 reg8_t mux_111(reg8_t regs[8], ctl_t select);
 // U112
@@ -50,11 +50,9 @@ reg8_t mux_112(reg8_t regs[4], ctl_t select);
 // U113
 reg8_t mux_113(reg8_t regs[4], ctl_t select);
 // U117
-void mux_U117(ctl_t select);
-// U118
-void mux_U118A(ctl_t select);
-// U118
-void mux_U118B(ctl_t select);
+void mux_U117(ctl_t select, ctl_t stack_add_sub_select);
+// U118A & U118B
+void mux_U118AB(ctl_t select_a, ctl_t enable_a, ctl_t select_b, ctl_t enable_b);
 // For printing the values of the registers on the rising clock
 void print_regs();
 

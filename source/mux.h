@@ -13,6 +13,17 @@ typedef uint8_t bit_t;
 // (Multiple Bit) Control Line Type
 typedef uint8_t ctl_t;
 
+static reg16_t mux_2_to_1(reg16_t input[2], reg8_t select)
+{
+    if (select >= 2)
+    {
+        fprintf(stderr, "'select' control signal out of bounds.\n");
+        exit(1);
+    }
+
+    return input[select];
+}
+
 static reg8_t mux_4_to_1(reg8_t input[4], reg8_t select)
 {
     if (select >= 4)

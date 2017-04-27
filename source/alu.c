@@ -19,8 +19,7 @@ reg8_t reg0(reg8_t updated_value, ctl_t clk)
        waiting_val = updated_value;
     }
         
-    return r0;
-}
+    return r0; }
 
 
 // U11
@@ -135,11 +134,13 @@ reg8_t alu_not(reg8_t a)
 }
 
 // U107
-// uint16_t stack_addsub(uint16_t *sp, char plusminus, char align)
-// {
-//     align = 2;
-//     return 0;
-// }
+reg16_t stack_add_sub(ctl_t plusminus)
+{
+    char align = 2;
+    if(plusminus)
+        return sp + 2;
+    return sp - 2;
+}
 
 // U110
 ctl_t flags_110(bit_t sum, bit_t overflow, bit_t carry_out)
@@ -170,22 +171,50 @@ reg8_t mux_113(reg8_t regs[4], ctl_t select)
 }
 
 // U117
-void mux_U117(ctl_t select)
+void mux_U117(ctl_t select, ctl_t stack_add_sub_select)
 {
-    
+    reg16_t inputs[] = {(reg16_t) r0, stack_add_sub(2)};
+    stack_pointer_impl(mux_2_to_1(inputs, select), 0);
 }
 
-// U118
-void mux_U118A(ctl_t select)
+// U118A & U118B
+void mux_U118AB(ctl_t select_a, ctl_t enable_a, ctl_t select_b, ctl_t enable_b)
 {
-    
+    reg8_t input_a = 0;
+    reg8_t input_b = 0;
+
+    if(enable_a)
+    {
+        switch(select_a)
+        {
+            case 3:
+                input_a = alu_output;
+                break;
+            default:
+                fprintf(stderr, "'select_a' control signal is unusable.\n");
+                exit(1);
+        }
+    }
+
+    if(enable_b)
+    {
+        switch(select_b)
+        {
+            case 3:
+                input_b = alu_output;
+                break;
+            default:
+                fprintf(stderr, "'select_b' control signal is unusable.\n");
+                exit(1);
+        }
+    }
+
+    reg8_t (*registers[4])(reg8_t, ctl_t) = {&reg0, &reg1, &reg2, &reg3};
+    demux_2_to_4(registers,
+                 input_a, select_a, enable_a,
+                 input_b, select_b, enable_b);
 }
 
-// U118
-void mux_U118B(ctl_t select)
-{
-    
-}
 
 void print_regs()
 {
