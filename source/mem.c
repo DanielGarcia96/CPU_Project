@@ -91,7 +91,7 @@ void writeMemory(char addr_16bits[], char inputData[])
     }
 
     printf("Momory location %d\n", number);  
-    printf("Data size %d\n", strlen(inputData)); 
+    printf("Data size %lu\n", strlen(inputData)); 
     printf("Write data \n");
     
     //Write data into memory
@@ -101,17 +101,8 @@ void writeMemory(char addr_16bits[], char inputData[])
         printf("%c", inputData[n]);
     }
     printf("\n");
-/*
-for (k  = 0 ; memoryArray[chipSel][number + k] != '\0'; k++);
-printf("k %d\n", k);
-printf("memory");
-     for(int m = 0; m < strlen(data); m++)
-    {
-        printf("%c", memoryArray[chipSel][number+m]);
-    }
-*/
-    return 0;
 }
+
 char* readMemory(char addr_16bits[])
 {
 //   char memoryArray[16][4096] = {};

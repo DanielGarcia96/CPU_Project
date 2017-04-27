@@ -13,6 +13,8 @@ char Data[4096];
 char memoryArray[16][4096] = {};
 
 void fibonacci(uint8_t n);
+void init_hex(void);
+unsigned char hex_to_byte(char *str);
 
 int main(int argc, char *argv[])
 {
@@ -31,12 +33,22 @@ int main(int argc, char *argv[])
     char* returnData;
     
     char *code = argv[1];
-    int byte;
-    int offset = 0;
-    while ((offset = sscanf(code, "%02X", &byte)) != EOF)
+    size_t code_len = strlen(code);
+    if (code_len % 2 != 0)
     {
-        code += offset;
-        // Process current byte
+        fprintf(stderr, "USAGE: cpu [HEX-PROGRAM]\n\n");
+        fprintf(stderr, "HEX-PROGRAM must have an even number of characters.\n");
+        return 1;
+    }
+
+    init_hex();
+
+    int byte;
+    while (code_len > 0)
+    {
+        printf("%d\n", (int)hex_to_byte(code));
+        code += 2;
+        code_len -= 2;
     }
     
     // fetch, decode, execute loop goes here
@@ -51,6 +63,47 @@ int main(int argc, char *argv[])
         }
     */
     return 0;
+}
+
+char hex[256];
+
+void init_hex(void)
+{
+    for (int i = 0; i < 256; i++)
+    {
+        if (i >= '0' && i <= '9')
+        {
+            hex[i] = i - '0';
+        }
+        else if (i >= 'A' && i <= 'F')
+        {
+            hex[i] = i - 'A' + 10;
+        }
+        else if (i >= 'a' && i <= 'f')
+        {
+            hex[i] = i - 'a' + 10;
+        }
+        else
+        {
+            hex[i] = 0xFF;
+        }
+    }
+}
+
+// Assumes at least two characters in input string
+unsigned char hex_to_byte(char *str)
+{
+    unsigned char value_0 = hex[str[0]];
+    unsigned char value_1 = hex[str[1]];
+
+    if (value_0 == 0xFF || value_1 == 0xFF)
+    {
+        fprintf(stderr, "USAGE: cpu [HEX-PROGRAM]\n\n");
+        fprintf(stderr, "HEX-PROGRAM must contain only hexadecimal characters.\n");
+        exit(1);
+    }
+
+    return (value_0 << 4) | value_1;
 }
 
 void fibonacci(reg8_t n)
