@@ -5,6 +5,7 @@
 #include "alu.h"
 
 // U10
+// Written by Daniel Garcia
 reg8_t reg0(reg8_t updated_value, ctl_t clk)
 {
     static reg8_t waiting_val = 0;
@@ -23,6 +24,7 @@ reg8_t reg0(reg8_t updated_value, ctl_t clk)
 
 
 // U11
+// Written by Daniel Garcia
 reg8_t reg1(reg8_t updated_value, ctl_t clk)
 {
     static reg8_t waiting_val = 0;
@@ -40,6 +42,7 @@ reg8_t reg1(reg8_t updated_value, ctl_t clk)
 
 
 // U12
+// Written by Daniel Garcia
 reg8_t reg2(reg8_t updated_value, ctl_t clk)
 {
     static reg8_t waiting_val = 0;
@@ -57,6 +60,7 @@ reg8_t reg2(reg8_t updated_value, ctl_t clk)
 
 
 // U13
+// Written by Daniel Garcia
 reg8_t reg3(reg8_t updated_value, ctl_t clk)
 {
     static reg8_t waiting_val = 0;
@@ -74,6 +78,7 @@ reg8_t reg3(reg8_t updated_value, ctl_t clk)
 
 
 // U14
+// Written by Daniel Garcia
 reg16_t stack_pointer_impl(reg16_t updated_value, ctl_t clk)
 {
     static reg16_t waiting_val = 0;
@@ -90,6 +95,7 @@ reg16_t stack_pointer_impl(reg16_t updated_value, ctl_t clk)
 }
 
 // U100
+// Written by Michael Swan
 reg8_t alu_add_sub(reg8_t reg_a, reg8_t reg_b, bit_t carry_in, bit_t *overflow, bit_t *carry_out)
 {
     reg8_t sum, s, a, b, c, c_prev;
@@ -110,30 +116,35 @@ reg8_t alu_add_sub(reg8_t reg_a, reg8_t reg_b, bit_t carry_in, bit_t *overflow, 
 }
 
 // U101
+// Written by Michael Swan
 reg8_t alu_and(reg8_t a, reg8_t b)
 {
     return a & b;
 }
 
 // U102
+// Written by Michael Swan
 reg8_t alu_or(reg8_t a, reg8_t b)
 {
     return a | b;
 }
 
 // U103
+// Written by Michael Swan
 reg8_t alu_xor(reg8_t a, reg8_t b)
 {
     return a ^ b;
 }
 
 // U104
+// Written by Michael Swan
 reg8_t alu_not(reg8_t a)
 {
     return ~a;
 }
 
 // U107
+// Written by Daniel Garcia
 reg16_t stack_add_sub(ctl_t plusminus)
 {
     char align = 2;
@@ -143,6 +154,7 @@ reg16_t stack_add_sub(ctl_t plusminus)
 }
 
 // U110
+// Written by Michael Swan
 ctl_t flags_110(bit_t sum, bit_t overflow, bit_t carry_out)
 {
     return (overflow   ? FLAG_OVERFLOW : 0)
@@ -152,6 +164,7 @@ ctl_t flags_110(bit_t sum, bit_t overflow, bit_t carry_out)
 }
 
 // U111
+// Written by Michael Swan
 reg8_t mux_111(reg8_t regs[8], ctl_t select)
 {
     assert(select < 5);
@@ -159,18 +172,21 @@ reg8_t mux_111(reg8_t regs[8], ctl_t select)
 }
 
 // U112
+// Written by Michael Swan
 reg8_t mux_112(reg8_t regs[4], ctl_t select)
 {
     return mux_4_to_1(regs, select);
 }
 
 // U113
+// Written by Michael Swan
 reg8_t mux_113(reg8_t regs[4], ctl_t select)
 {
     return mux_4_to_1(regs, select);
 }
 
 // U117
+// Written by Daniel Garcia
 void mux_U117(ctl_t select, ctl_t stack_add_sub_select)
 {
     reg16_t inputs[] = {(reg16_t) r0, stack_add_sub(2)};
@@ -178,6 +194,7 @@ void mux_U117(ctl_t select, ctl_t stack_add_sub_select)
 }
 
 // U118A & U118B
+// Written by Daniel Garcia
 void mux_U118AB(ctl_t select_a, ctl_t enable_a, ctl_t select_b, ctl_t enable_b)
 {
     reg8_t input_a = 0;
@@ -215,13 +232,14 @@ void mux_U118AB(ctl_t select_a, ctl_t enable_a, ctl_t select_b, ctl_t enable_b)
                  input_b, select_b, enable_b);
 }
 
-
+// Written by Daniel Garcia
 void print_regs()
 {
     printf("r0: %u, r1: %u, r2: %u, r3: %u, sp: %u,\n",
            r0, r1, r2, r3, sp);
 }
 
+// Written by Michael Swan
 reg8_t alu(ctl_t select_a, ctl_t select_b, ctl_t select_out, bit_t carry_in, ctl_t *flags)
 {
     reg8_t regs[4] = {r0, r1, r2, r3};

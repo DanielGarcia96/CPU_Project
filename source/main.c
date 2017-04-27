@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // RW variables
+    // Read Write variables
     char address[10];
     char inputAddr[10];
     char inputData []= "abcdefghi444444444444444444444";

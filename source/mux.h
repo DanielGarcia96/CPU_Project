@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+// Written by Michael Swan
 // 16-bit Register Value Type
 typedef uint16_t reg16_t;
 // 8-bit Register Value Type
@@ -13,6 +14,7 @@ typedef uint8_t bit_t;
 // (Multiple Bit) Control Line Type
 typedef uint8_t ctl_t;
 
+// Written by Daniel Garcia
 static reg16_t mux_2_to_1(reg16_t input[2], reg8_t select)
 {
     if (select >= 2)
@@ -24,6 +26,7 @@ static reg16_t mux_2_to_1(reg16_t input[2], reg8_t select)
     return input[select];
 }
 
+// Written by Michael Swan
 static reg8_t mux_4_to_1(reg8_t input[4], reg8_t select)
 {
     if (select >= 4)
@@ -35,6 +38,7 @@ static reg8_t mux_4_to_1(reg8_t input[4], reg8_t select)
     return input[select];
 }
 
+// Written by Michael Swan
 static reg8_t mux_8_to_1(reg8_t input[8], reg8_t select)
 {
     if (select >= 8)
@@ -46,6 +50,7 @@ static reg8_t mux_8_to_1(reg8_t input[8], reg8_t select)
     return input[select];
 }
 
+// Written by Daniel Garcia
 // The variable "registers" is an array of function pointers to the register functions
 // Simply call this function as so: demux_2_to_4({&reg0, &reg1, &reg2, &reg3},
 //                                               input_a, select_a, enable_a)

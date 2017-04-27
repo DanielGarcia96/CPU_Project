@@ -4,8 +4,10 @@
 #include <stdint.h>
 #include "mux.h"
 
+// Written by Michael Swan
 #define BIT(x, i) (((x) & (1 << (i))) >> (i))
 
+// Written by Michael Swan
 #define FLAG_OVERFLOW (1<<0)
 #define FLAG_CARRY    (1<<1)
 #define FLAG_ZERO     (1<<2)

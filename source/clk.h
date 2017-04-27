@@ -3,6 +3,7 @@
 
 #include "alu.h"
 
+// Written by Daniel Garcia
 static void clk(ctl_t selects[], bit_t carry_in, ctl_t *flags,)
 {
     reg0(0, 1);
